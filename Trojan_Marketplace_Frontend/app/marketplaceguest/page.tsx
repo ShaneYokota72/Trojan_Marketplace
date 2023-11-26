@@ -4,7 +4,7 @@ import MarketPlaceHeader from '../components/MarketPlaceHeader'
 import MarketPlaceHeaderGuest from '../components/MarketPlaceHeaderGuest'
 
 const page = () => {
-  // api call 
+  
   const data  = [
     {
       name: 'Shoes',
@@ -40,7 +40,7 @@ const page = () => {
         <div className='flex flex-wrap justify-stretch w-screen'>
           {
             data.map((item) => (
-              <Item name={item.name} description={item.description} image={item.image} />
+              <Item key={item.name} name={item.name} description={item.description} image={item.image} />
             ))
           }
         </div>
