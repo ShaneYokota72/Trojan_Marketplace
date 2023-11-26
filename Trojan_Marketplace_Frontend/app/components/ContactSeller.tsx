@@ -39,7 +39,7 @@ export default function ContactSeller({seller} : {seller : sellerProps}) {
                 <button onClick={handleClick} className='font-serif underline'>Hide Contact Information</button>
             
                 <form className=' font-serif text-center border-1 border-1 lg:static lg:w-auto lg:rounded-xl lg: lg:border lg: lg:p-1 border-[#9D2235]'>
-                    <label className=' font-semibold'>Seller Details:</label>
+                    <label className='lg:text-lg sm:text-base font-semibold'>Seller Details:</label>
                     <br />
                     <label>{seller.fname} {seller.lname} </label>
                     <br />
@@ -50,7 +50,7 @@ export default function ContactSeller({seller} : {seller : sellerProps}) {
                     <textarea className='text-gray-600 text-center rounded-md bg-white' placeholder="Send a message here">
                     </textarea>
                     <br />
-                    <button type="submit" className='font-serif text-center rounded-md p-1 text-[#FFC72C] bg-[#9D2235]' >Submit</button>
+                    <button type="submit" className='font-serif text-center rounded-md p-1 text-[#FFC72C] bg-red-900' >Submit</button>
                 </form>
             </div>
             
