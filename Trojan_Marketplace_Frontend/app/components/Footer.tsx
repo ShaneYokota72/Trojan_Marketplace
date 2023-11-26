@@ -3,6 +3,7 @@ import logo from '/public/trojanhead.png'; // Adjust the path to where your imag
 import Image from '@/node_modules/next/image';
 import Link from '@/node_modules/next/link';
 const Footer = () => {
+  let userID = 1; // placeholder value
   return (
     <footer className="bg-cardinal text-#FFFF00 px-4 py-2 flex justify-between items-center">
       <div className="flex items-center flex-grow">
@@ -15,7 +16,7 @@ const Footer = () => {
         {/* Adjust the class names to ensure they position the text higher */}
         <Link href="/" className="text-white hover:text-gold transition-colors ease-in-out duration-300 underline">Search Item
         </Link>
-        <Link href="/cart" className="text-white hover:text-gold transition-colors ease-in-out duration-300 underline">Cart 
+        <Link href={'/cart/${userID}'} className="text-white hover:text-gold transition-colors ease-in-out duration-300 underline">Cart 
         </Link>
         <Link href="/help" className="text-white mr-10 hover:text-gold transition-colors ease-in-out duration-300 underline">Listings
         </Link>
