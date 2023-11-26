@@ -5,7 +5,7 @@ export default function item( props :any ) {
   const {name, description, image} = props
   return (
     <div className="card w-72 bg-base-100 shadow-xl">
-        <figure><img src={image} alt={name} /></figure>
+        <figure><img src={image} alt={name} width={100} height={100} /></figure>
         <div className="card-body">
             <h2 className="card-title">{name}</h2>
             <p>{description}</p>

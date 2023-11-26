@@ -34,7 +34,8 @@ const page = () => {
 
   return (
     <div>
-      <MarketPlaceHeaderGuest />
+        
+        <MarketPlaceHeader />
         {/* //different header use a layout file
         //implement navbar using daisyUi framework */}
         <div className='flex flex-wrap justify-stretch w-screen'>

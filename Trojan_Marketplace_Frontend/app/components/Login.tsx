@@ -13,11 +13,11 @@ const Login = () => {
                 <input type="text" placeholder="Password" className="input input-bordered w-[30rem] rounded-none" />
                 <br></br>
                 <br></br>
-                <button className="btn btn-accent btn-active btn-large w-72 rounded-none">Register</button>
+                <button className="btn btn-accent btn-active btn-large w-72 rounded-none">Login</button>
                 <br></br>
             </form>
             
-            <Link href ="" className='text-accent ml-20'></Link>
+            
         </div>
         
     </div>
