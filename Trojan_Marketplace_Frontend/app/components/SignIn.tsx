@@ -80,7 +80,9 @@ const SignIn = () => {
                 <input type="password" placeholder="Password" value={password} onChange={e => setpassword(e.target.value)} className="input input-bordered w-[30rem] rounded-none" />
                 <br></br>
                 <br></br>
-                <button onClick={() => setcallapi(true)} className="btn btn-accent btn-active btn-large w-72 rounded-none">Register</button>
+                <Link href={'marketplaceuser'}>
+                  <button onClick={() => setcallapi(true)} className="btn btn-accent btn-active btn-large w-72 rounded-none">Register</button>
+                </Link>
                 <br></br>
         </div>
         
