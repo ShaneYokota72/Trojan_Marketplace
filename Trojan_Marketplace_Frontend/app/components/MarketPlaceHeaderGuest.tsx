@@ -12,7 +12,7 @@ const MarketPlaceHeaderGuest = () => {
                 <div className="join -ml-[33rem] -mt-2">
                         <div>
                             <div>
-                                <input className="input input-bordered join-item w-[44rem]" placeholder="Search"/>
+                                <input className="input input-bordered !outline-none join-item w-[44rem]" placeholder="Search"/>
                             </div>
                         </div>
     
