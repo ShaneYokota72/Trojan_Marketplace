@@ -15,6 +15,7 @@ public class User {
 
     String username;
     String password;
+    String email;
     String fname;
     String lname;
 
@@ -40,6 +41,14 @@ public class User {
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public void setemail(String email){
+        this.email = email;
     }
 
     public String getFname(){
