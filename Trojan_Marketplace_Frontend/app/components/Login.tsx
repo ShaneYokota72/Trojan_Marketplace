@@ -1,6 +1,7 @@
 "use client"
 import React,{useState, useEffect} from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 async function login(username: String, password: String) {
   const res = await fetch('http://localhost:8000/auth/login', {
@@ -68,7 +69,9 @@ const Login = () => {
             <input type="password" placeholder="Password" value={password} onChange={e => setpassword(e.target.value)} className="input input-bordered w-[30rem] rounded-none" />
             <br></br>
             <br></br>
-            <button onClick={() => setcallapi(true)} className="btn btn-accent btn-active btn-large w-72 rounded-none">Login</button>
+            <Link href={'marketplaceuser'}>
+              <button onClick={() => setcallapi(true)} className="btn btn-accent btn-active btn-large w-72 rounded-none">Login</button>
+            </Link>
             <br></br>
         </div>
         
