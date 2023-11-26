@@ -2,8 +2,9 @@ package com.trojan_marketplace.trojan_marketplace.controller;
 
 import java.util.List;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.trojan_marketplace.trojan_marketplace.model.Listing;
 import com.trojan_marketplace.trojan_marketplace.repository.ListingRepo;
+
 
 @RestController
 @RequestMapping(value = "/listing")
@@ -29,6 +31,23 @@ public class ListingController {
     List<Listing> getAllListings(){
         List<Listing> listings = Listing_Repo.findAll();
         return listings;
+    }
+
+    // GET: /listing/search
+    // search for listings of a particular keyword
+        // TODO: consider functionality to have a type of sorting (i.e. relevance, best search etc.)
+    @GetMapping("/getall/{query}")
+    List<Listing> searchListings(@PathVariable String query){
+        // List<Listing> relevant  = Listing_Repo.findAll();
+
+        return Listing_Repo.findByNameContaining(query);
+
+        // Listing_Repo.findbb
+        
+
+        // TODO: implement a find all by a particular search query
+
+        // return relevant;
     }
 
     // POST: /listing/add
@@ -48,23 +67,53 @@ public class ListingController {
         }
     }
 
-    // DELETE: /listing/remove/{USER ID HERE}
+    // POST: /listing/remove/{USER ID HERE}
     // remove a listing
-    @DeleteMapping("/remove/{id}")
+    @PostMapping("/remove/{id}")
+    @NotFound(action = NotFoundAction.IGNORE)
     ResponseEntity<?> removeListing(@PathVariable Integer id){
         // CONSIDERATION: 
             // instead of deleting the item from our local repository, we leave it in the 
             // repository and simply set the status to "inactive" | might be useful?
 
+        try {
+            Listing listing = Listing_Repo.findById(id).get();
 
-        // find the listing
-        Listing listing = Listing_Repo.getReferenceById(id);
+            Listing_Repo.delete(listing);
 
-        if (listing == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        
-        
-        return ResponseEntity.status(HttpStatus.OK).body(listing);
+            return ResponseEntity.status(HttpStatus.OK).body("success");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ITEM NOT FOUND");
+        }
+    }
+
+
+    // POST: /listing/edit/{LISTING ID HERE}
+    // remove a listing
+        // TODO: consider adding functionality to make sure the right user edits their OWN listing
+    @PostMapping("/edit/{id}")
+    // @NotFound(action = NotFoundAction.IGNORE)
+    ResponseEntity<?> editListing(@PathVariable Integer id, @RequestBody Listing edits){
+        try {
+            // obtain our specific listing
+            Listing listing = Listing_Repo.findById(id).get();
+
+            // update all our entries
+                // TODO: make sure entries aren't null (they shouldn't be?)
+            listing.setName(edits.getName());
+            listing.setPrice(edits.getPrice());
+            listing.setDescription(edits.getDescription());
+            listing.setStatus(edits.getStatus());
+            listing.setImage(edits.getImage());
+
+            // save the existing item BACK to the repository
+            Listing_Repo.save(listing);
+
+            // return the modified listing in the database
+            return ResponseEntity.status(HttpStatus.OK).body(listing);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ITEM NOT FOUND");
+        }
     }
 
 }
