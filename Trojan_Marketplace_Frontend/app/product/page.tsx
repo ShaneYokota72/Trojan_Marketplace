@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import CartButton from './component/ClientStateForCartBtn';
+import CartButton from '../components/ClientStateForCartBtn';
 export default function Product() {
   // export a product data from the back end.
   const product = {

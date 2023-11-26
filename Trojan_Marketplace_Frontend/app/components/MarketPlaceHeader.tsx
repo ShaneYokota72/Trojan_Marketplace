@@ -23,9 +23,11 @@ const MarketPlaceHeader = () => {
 
             {/* <div>
                 <Link href = "/" className='hover:text-red-900 float-none text-base'>Search Item</Link>
-            </div> */}
+            </div> */
+              // note about cart link: need to route dynamically w/ userID
+            }
             <div>
-                <Link href = "/" className='hover:text-red-900 float-none text-base'>Cart</Link>
+                <Link href = "/cart/1" className='hover:text-red-900 float-none text-base'>Cart</Link>
             </div>
             <div>
                 <Link href = "/" className='hover:text-red-900 float-none text-base'>Listings</Link>
