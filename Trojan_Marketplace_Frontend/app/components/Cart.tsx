@@ -11,16 +11,15 @@ import { useState } from "react";
 */
 
 export default function Cart() {
-    // TODO: redirect user to their cart using their actual userID in URL routing
+    // TODO: redirect user to their cart using their actual userID in URL routing (in header/footer). currently hardcoded to userID=1
     // TODO: await/fetch cart data from API based on userID
-    // TODO: link cart page to product page using itemID (see tableRows)
-
-    // note: the state array below is being parsed into a map
+    // TODO: call API when deleting item in removeItem()
+    // TODO: link cart page to product page using actual itemID (see tableRows). currently hardcoded to go from all products to /product only
 
     /* "array of items with state nextjs" prompt (1 line), Stack Overflow, 24 Nov 2023,
     * https://react.dev/learn/updating-arrays-in-state
     */
-    const [cartItems, setItems] = useState( [
+    const [items, setItems] = useState( [
         {
             "userID": 1,
             "itemID": 1,
@@ -28,11 +27,10 @@ export default function Cart() {
             "name": "Trojan Mug",
             "image": "https://www.uscbookstore.com/SSP%20Applications/USC%20-%20SCA%20Vinson/product-images/1962143_main-1.jpg", // add an alt when using actual API data
             "description": "Super cool mug. Fight on!",
-            "status": true, // true=available?
+            "status": true, // true=available? can also remove this
             "sellerID": 3, 
-            // seller name + contact info (email; same as username)
             // seller's name/contact can also be retrieved later, whatever's easier
-                    // i.e. fetch buyer’s info and sellerID, then separately call for sellerID to use for "Contact Seller" button
+                // i.e. fetch buyer’s info and sellerID, then separately call for sellerID to use for "Contact Seller" button
             "sellerFname": "Tommy",
             "sellerLname": "Trojan",
             "sellerUsername": "tommytrojan@usc.edu",
@@ -111,7 +109,7 @@ export default function Cart() {
     ]);
 
     async function removeItem(itemID : number) { // remove item from cart based on its ID
-        // TODO: call API to remove item
+        // TODO: call API to remove item from database
 
         /* "nextjs delete item from state array" prompt (1 line), Stack Overflow, 24 Nov 2023,
         https://stackoverflow.com/questions/36326612/how-to-delete-an-item-from-state-array 
@@ -119,14 +117,17 @@ export default function Cart() {
         setItems(prevItems => prevItems.filter(item => item.itemID !== itemID));
     }
 
-    let cartCount = cartItems.length;
+    let cartCount = items.length;
     // stores rows for all items 
-    const tableRows = cartItems.map((element) => { 
+    const tableRows = items.map((element) => { 
         // right now seller info is assumed to be fetched w/ the item details
         // but we can also fetch seller info separately if that's easier
+        
+        if (element.status != true) { // change if status isn't a bool
+            return null;
+        }
 
-
-        // TODO: redirect to correct product page using itemID
+        // TODO: redirect to correct product page using actual itemID
         // put seller details in an object and pass it to another client-side function for the "contact seller" button
         let seller = {userID: element.sellerID, fname: element.sellerFname, lname: element.sellerLname, username: element.sellerUsername};
         return (
@@ -157,7 +158,7 @@ export default function Cart() {
         );
     });
 
-    // displays the cart page in table format
+    // returns the full cart page in table format
     return (
         <main className='flex min-h-screen flex-col items-center w-full '>
             
