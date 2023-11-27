@@ -1,9 +1,26 @@
-import React from 'react'
+"use client"
+import React,{useEffect, useState} from 'react'
 import Item from '../components/item'
 import MarketPlaceHeader from '../components/MarketPlaceHeader'
 import MarketPlaceHeaderGuest from '../components/MarketPlaceHeaderGuest'
+import { useRouter } from 'next/navigation'
+
+async function getcookie() {
+  const res = await fetch('http://localhost:8000/auth/getcookie', {
+    method: 'GET',  
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+ 
+  const data = await res.json();
+  return data;
+}
 
 const page = () => {
+  const router = useRouter();
+  const [redirect, setredirect] = useState(false)
   
   const data  = [
     {
@@ -31,6 +48,20 @@ const page = () => {
       alt: 'picture of Notebook'
     },
   ]
+
+  useEffect(() => {
+    const api = async () => {
+      const response = await getcookie();
+      if (response !== 0) {
+        setredirect(true);
+      }
+    }
+    api();
+  },[])
+
+  if(redirect){
+    router.push('/marketplaceuser')
+  }
 
   return (
     <div>
