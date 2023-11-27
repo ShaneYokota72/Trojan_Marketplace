@@ -26,10 +26,15 @@ const SignIn = () => {
   const router = useRouter();
 
   const [fname, setfname] = useState('')
+  const [typedFname, setTypedFname] = useState<string[]>([])
   const [lname, setlname] = useState('')
+  const [typedLname, setTypedLname] = useState<string[]>([])
   const [email, setemail] = useState('')
+  const [typedEmail, setTypedEmail] = useState<string[]>([])
   const [username, setusername] = useState('')
+  const [typedUsername, setTypedUsername] = useState<string[]>([])
   const [password, setpassword] = useState('')
+  const [typedPassword, setTypedPassword] = useState<string[]>([])
 
   const [callapi, setcallapi] = useState(false)
 
@@ -41,6 +46,11 @@ const SignIn = () => {
         const response = await Signup(fname, lname, email, username, password);
         if (response) {
           console.log('successful sign up');
+          setTypedFname((prevValues) => [...prevValues,fname]);
+          setTypedLname((prevValues) => [...prevValues,lname]);
+          setTypedEmail((prevValues) => [...prevValues,email]);
+          setTypedUsername((prevValues) => [...prevValues,username]);
+          setTypedPassword((prevValues) => [...prevValues,password]);
           setredirect(true);
         } else {
           console.log('unsuccessful sign up');
