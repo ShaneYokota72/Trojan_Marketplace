@@ -26,7 +26,10 @@ const Login = () => {
   const router = useRouter();
 
   const [username, setusername] = useState('')
+  const [typedUsername, setTypedUsername] = useState<string[]>([])
   const [password, setpassword] = useState('')
+  const [typedPassword, setTypedPassword] = useState<string[]>([])
+
 
   const [callapi, setcallapi] = useState(false)
   const [redirect, setredirect] = useState(false)
@@ -37,6 +40,8 @@ const Login = () => {
         const response = await login(username, password);
         if (response) {
           console.log('successful login');
+          setTypedUsername((prevValues) => [...prevValues,username]);
+          setTypedPassword((prevValues) => [...prevValues,password]);
           setredirect(true);
         } else {
           console.log('unsuccessful login');
