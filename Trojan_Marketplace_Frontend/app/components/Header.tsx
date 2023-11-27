@@ -7,9 +7,9 @@ const Header = () => {
         <Link href = "/" className='hover:text-red-900 font-medium'>TROJAN MARKETPLACE</Link>
       </div>
       <div className = "float-right mt-8 text-left w-52 ">
-        <Link href = "/marketplaceguest" className='hover:text-red-900'>Search item as a Guest</Link>
+        <Link href = "/marketplaceguest" className='hover:text-gold text-red-900'>Search Item as a Guest</Link>
         <br></br>
-        <Link href = "/login" className='hover:text-red-900'>Login</Link>
+        <Link href = "/login" className='hover:text-gold text-red-900'>Login</Link>
       </div>
     </div>
   )
