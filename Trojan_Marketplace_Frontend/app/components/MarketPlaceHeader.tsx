@@ -1,7 +1,12 @@
+'use client'
 import Link from 'next/link'
-import React from 'react'
-
+import React, {useState, useEffect} from 'react'
 const MarketPlaceHeader = () => {
+
+  const [search, setSearch] = useState('')
+
+
+  
   return (
     <div className='text-accent  font-serif bg-white h-40 border-2'>
       <div className = "ml-4 mt-8 text-2xl w-96 float-left">
@@ -12,7 +17,7 @@ const MarketPlaceHeader = () => {
             <div className="join -ml-[33rem] -mt-2">
                     <div>
                         <div>
-                            <input className="input input-bordered !outline-none join-item w-[25rem]" placeholder="Search"/>
+                            <input className="input input-bordered !outline-none join-item w-[25rem]" placeholder="Search" value ={search} onChange={e => setSearch(e.target.value)}/>
                         </div>
                     </div>
 
