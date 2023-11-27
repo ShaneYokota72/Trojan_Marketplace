@@ -2,6 +2,7 @@ package com.trojan_marketplace.trojan_marketplace.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -74,22 +75,21 @@ public class CartController {
         }
     }
 
-    // POST: /cart/remove/{LISTING ID HERE}
-    // remove a listing from the car.
+    // POST: /cart/remove/{cart ID HERE}
+    // remove an item from the cart.
         // NOTE: you need the associated ID with the LISTING ITEM for this functionality
     @PostMapping("/remove/{id}")
     ResponseEntity<?> removeCartItem(@PathVariable Integer id){
         try {
-            List<Cart> relevantItems = Cart_Repo.findByListingId(id);
-
-            if (relevantItems.size() == 0) {
+            Optional<Cart> optionalItem = Cart_Repo.findById(id);
+            if(!optionalItem.isPresent()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ITEM NOT FOUND");
             }
 
-            // remove the first item in the relevant items list
-            Cart_Repo.delete(relevantItems.get(0));
+            // remove the item in the relevant items list
+            Cart item = optionalItem.get();
+            Cart_Repo.delete(item);
 
-            // notify the user that the removal was successful
             return ResponseEntity.status(HttpStatus.OK).body("success");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ITEM NOT FOUND");
