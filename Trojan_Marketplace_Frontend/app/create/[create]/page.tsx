@@ -1,32 +1,16 @@
 import Link from 'next/link'
-
+import MarketPlaceHeader from '../../components/MarketPlaceHeader';
+import Footer from '../../components/Footer';
 
 export default function CreateListing() {
-
+    /* 
+    input IDs: item_name, item_price, item_image, item_description
+    Will add new listing to the database with userID, itemID, and status
+    */
     return (
+        <div className='flex flex-col w-full'>
+            <MarketPlaceHeader />
         <main className='flex flex-col min-h-screen flex items-center justify-start p-16'>
-            
-            {/* To be edited: header */}
-            <div className="z-10 max-w-5xl w-full items-center justify-between font-serif text-sm lg:flex mb-4">
-                <p className="fixed left-0 top-0 flex w-full justify-center   lg:static lg:w-auto   text-xl font-serif font-bold">
-                <Link href="../..">
-                TROJAN MARKETPLACE&nbsp;
-                </Link>
-                </p>
-                <div className=' space-x-16 '>
-                    <button className='text-base font-serif font-bold'>Search Item&nbsp;</button>
-                   
-                    <button className='text-base font-serif font-bold'>Cart&nbsp;</button>
-
-                    <Link href="/listing/[listing]">
-                    <button className='text-base font-serif font-bold'>Listings&nbsp;</button>
-                    </Link>
-                    <button className='text-base font-serif font-bold'>Log Out&nbsp;</button>
-                </div>
-            </div>
-            {/* To be edited: header */}
-
-
             <div className='w-10/12 h-full bg-[#f1f1f1]'>
             <form className="text-center p-8 border rounded-lg shadow-lg">
                 {/*  2 lines - tailwind components for input box style https://v1.tailwindcss.com/components/forms */}
@@ -68,5 +52,7 @@ export default function CreateListing() {
             </form>
             </div>
         </main>
+        <Footer />
+        </div>
     )
 }
