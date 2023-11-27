@@ -18,6 +18,10 @@ import org.springframework.http.ResponseEntity;
 import com.trojan_marketplace.trojan_marketplace.model.User;
 import com.trojan_marketplace.trojan_marketplace.repository.UserRepo;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
@@ -38,10 +42,26 @@ public class UserController {
         User_Repo.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
+   
+    @GetMapping("/getcookie")
+    ResponseEntity<?> getcookie(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for(int i=0; i<cookies.length; i++){
+                if("user-id".equals(cookies[i].getName())){
+                    return ResponseEntity.ok(cookies[i].getValue());
+                }
+            }
+        } else {
+            return ResponseEntity.status(401).body(0);
+        }
+
+        return ResponseEntity.status(401).body(0);
+    }
 
     // /auth/login (POST) - log in (frontend:make sure the user sends all info)
     @PostMapping("/login")
-    ResponseEntity<?> login(@RequestBody Map<String, String> body
+    ResponseEntity<?> login(@RequestBody Map<String, String> body, HttpServletResponse response
         // @RequestParam String username,
         // @RequestParam String password
     ){
@@ -54,6 +74,8 @@ public class UserController {
         }
         
         if(BCrypt.checkpw(password, temp.getPassword())){
+            Cookie cookie = new Cookie("user-id", Integer.toString(temp.getId()));
+            response.addCookie(cookie);
             return ResponseEntity.status(HttpStatus.OK).body(temp);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
