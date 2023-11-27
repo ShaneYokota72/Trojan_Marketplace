@@ -35,7 +35,7 @@ const MarketPlaceHeader = () => {
                 <Link href = "/cart/1" className='hover:text-red-900 float-none text-base'>Cart</Link>
             </div>
             <div>
-                <Link href = "/" className='hover:text-red-900 float-none text-base'>Listings</Link>
+                <Link href = "/listing/1" className='hover:text-red-900 float-none text-base'>Listings</Link>
             </div>
             <div>
                 <Link href = "/" className='hover:text-red-900 float-none text-base'>Logout</Link>
