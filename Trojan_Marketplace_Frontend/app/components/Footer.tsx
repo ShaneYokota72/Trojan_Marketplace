@@ -19,14 +19,12 @@ async function getcookie() {
   return data;
 }
 
-
-
 const Footer = () => {
 
  // const router = useRouter();
   const [loggedin, setloggedin] = useState(false);
 
-useEffect(() => {
+  useEffect(() => {
     const api = async () => {
       const response = await getcookie();
       if (response !== 0) {
@@ -34,14 +32,12 @@ useEffect(() => {
         // implement your functionality here using the response as the user-id
         setloggedin(true)
 
-      }
-      else {
+      } else {
         setloggedin(false); 
       }
     }
     api();
   },[])
-  let userID = 1; // placeholder value ( should ideally come from user state)
 
   return (
     <footer className="bg-cardinal text-#FFFF00 px-4 py-2 flex justify-between items-center">
@@ -50,13 +46,13 @@ useEffect(() => {
         <h1 className="ml-2 font-bold text-gold">Trojan Marketplace</h1>
       </div>
 
-      {loggedin && (
+      {loggedin ? (
         <nav className="flex gap-20 items-start mb-2">
-          <Link href="/" className="text-white hover:text-gold transition-colors ease-in-out duration-300 underline">Search Item</Link>
-          <Link href={`/cart/${userID}`} className="text-white hover:text-gold transition-colors ease-in-out duration-300 underline">Cart</Link>
-          <Link href="/" className="text-white mr-10 hover:text-gold transition-colors ease-in-out duration-300 underline">Listings</Link>
+          <Link href={`/cart`} className="text-white hover:text-gold transition-colors ease-in-out duration-300 underline">Cart</Link>
+          <Link href="/listing" className="text-white mr-10 hover:text-gold transition-colors ease-in-out duration-300 underline">Listings</Link>
         </nav>
-      )}
+      ): 
+      (null)}
     </footer>
   );
 };

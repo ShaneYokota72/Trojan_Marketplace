@@ -31,15 +31,37 @@ public class CartController {
     @Autowired
     ListingRepo Listing_Repo;
 
+    static class ListingResponse {
+
+        private Integer id;
+        private Listing listing;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public Listing getListing() {
+            return listing;
+        }
+
+        public void setListing(Listing listing) {
+            this.listing = listing;
+        }
+    }
+
     // GET: /cart/get/{USER ID GOES HERE}
     // obtain all cart items associated with a user (i.e. a user's cart)
     @GetMapping("/get/{id}")
-    List<Listing> getAllCartItems(@PathVariable Integer id){
+    List<ListingResponse> getAllCartItems(@PathVariable Integer id){
         // obtain all cart items
         List<Cart> cartItems = Cart_Repo.findByUserId(id);
 
         // turn each id into a formatted cart
-        List<Listing> formattedCartItems = new ArrayList<Listing>();
+        List<ListingResponse> responses = new ArrayList<ListingResponse>();
 
         for (Cart item: cartItems) {
             // try for each iteration (until a null entry is found)
@@ -48,8 +70,10 @@ public class CartController {
                 Integer listing_id = item.getListingId();
                 Listing listing = Listing_Repo.findById(listing_id).get();
 
-                formattedCartItems.add(listing);
-
+                ListingResponse response = new ListingResponse();
+                response.setId(item.getId());
+                response.setListing(listing);
+                responses.add(response);
             } catch (Exception e) {
                 // error! 
 
@@ -57,7 +81,7 @@ public class CartController {
             }
         }
 
-        return formattedCartItems;
+        return responses;
     }
 
     // POST: /cart/add
