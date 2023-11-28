@@ -42,45 +42,42 @@ async function getcart() {
 
 export default function Listings() {
     const [listingItems, setlistingItems] = useState<ListItem[]>([]);
+    const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
+        console.log('useEffect');
         const api = async () => {
             const response = await getcart();
             // return response;
             setlistingItems(response as unknown as ListItem[]);
         };
         api();
-
-        return () => {
-          // Cleanup if needed
-        };
-    }, []);
+    }, [refresh]);
     
     return (
         <div className='flex flex-col w-full'>
             <MarketPlaceHeader />
-        <div className='flex min-h-screen flex-col items-center w-full'>
-            <div className='w-10/12 h-full'>
-                <div className='flex justify-between items-center'>
-                    <h1 className='lg:text-xl sm:text-lg font-serif font-bold text-left px-10 py-6'>My Listing</h1>
-                    <Link className='border-1 mr-8 border-gray-300 static w-auto rounded-xl border bg-gray-200 px-4 py-2 my-2 hover:bg-gray-300' href={'/create'}>Add Listing</Link>
+            <div className='flex min-h-screen flex-col items-center w-full'>
+                <div className='w-10/12 h-full'>
+                    <div className='flex justify-between items-center'>
+                        <h1 className='lg:text-xl sm:text-lg font-serif font-bold text-left px-10 py-6'>My Listing</h1>
+                        <Link className='border-1 mr-8 border-gray-300 static w-auto rounded-xl border bg-gray-200 px-4 py-2 my-2 hover:bg-gray-300' href={'/create'}>Add Listing</Link>
+                    </div>
+                    <div className='px-8'>
+                        <div className='border-t-2 border-gray-500 border-opacity-50 '></div>
+                    </div>
+                    <div className='flex justify-between items-center'>
+                        <h6 className='font-serif px-20 py-6'>Item(s): {listingItems.length}</h6>
+                        <h6 className='font-serif px-20 py-6'>Actions</h6>
+                    </div>
                 </div>
-                <div className='px-8'>
-                    <div className='border-t-2 border-gray-500 border-opacity-50 '></div>
-                </div>
-                <div className='flex justify-between items-center'>
-                    <h6 className='font-serif px-20 py-6'>Item(s): {listingItems.length}</h6>
-                    <h6 className='font-serif px-20 py-6'>Actions</h6>
-                </div>
-            </div>
 
-            <div className='w-10/12 flex flex-col  justify-center items-center'>
-                {listingItems.map((element, index) => (
-                    <Listing element={element} index={index} />
-                ))}
+                <div className='w-10/12 flex flex-col  justify-center items-center'>
+                    {listingItems.map((element, index) => (
+                        <Listing element={element} index={index} onDelete={() => setRefresh(prev => prev + 1)}/>
+                    ))}
+                </div>
             </div>
-        </div>
-        <Footer />
         </div>
         
       )

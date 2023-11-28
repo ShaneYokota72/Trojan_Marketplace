@@ -1,6 +1,7 @@
 package com.trojan_marketplace.trojan_marketplace.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -58,6 +59,19 @@ public class ListingController {
     List<Listing> mylisting(@PathVariable String query){
         // List<Listing> relevant  = Listing_Repo.findAll();
         return Listing_Repo.findByuserId(Integer.parseInt(query));
+    }
+    
+    // GET: /listing/get/{user-id}
+    // search for listings of a a certain user
+    @GetMapping("/getitem/{num}")
+    ResponseEntity<?> getone(@PathVariable String num){
+        Optional<Listing> optionalItem = Listing_Repo.findById(Integer.parseInt(num));
+        if(!optionalItem.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Listing item = optionalItem.get();
+        // return item;
+        return ResponseEntity.status(HttpStatus.OK).body(item);
     }
 
 

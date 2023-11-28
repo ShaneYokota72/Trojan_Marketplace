@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import React from 'react'
 import { useState, useEffect } from 'react'
 
@@ -30,10 +31,16 @@ async function addtocart(lid: number) {
 }
 
 export default function item( props :any ) {
+  const router = useRouter();
   const {name, description, image} = props
 
   // write api for handleaddtocart
   async function handleaddtocart() {
+    const uid = await getcookie();
+    if(uid === 0) {
+      router.push("/login")
+      return;
+    }
     const response = await addtocart(props.id);
     if(response === 201) {
       alert('Successfully added to cart');
@@ -43,8 +50,8 @@ export default function item( props :any ) {
   }
 
   return (
-    <div className="card w-72 bg-base-100 shadow-xl" key={props.id}>
-        <figure><img src={image} alt={name} width={100} height={100} /></figure>
+    <div className="card w-72 bg-base-100 border-rounded border-2 shadow-xl m-4" key={props.id}>
+        <figure className='mt-4'><img src={image} alt={name} width={100} height={100} className='!h-40 w-auto'/></figure>
         <div className="card-body">
             <h2 className="card-title">{name}</h2>
             <p>{description}</p>

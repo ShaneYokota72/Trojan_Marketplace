@@ -2,10 +2,12 @@ package com.trojan_marketplace.trojan_marketplace.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -96,6 +98,18 @@ public class UserController {
     List<User> getAlluser(){
         List<User> users = User_Repo.findAll();
         return users;
+    }
+
+    // /auth/getone/{user id}
+    @GetMapping("/getone/{uid}")
+    ResponseEntity<?> getoneuser(@PathVariable String uid){
+        Optional<User> optionalUser = User_Repo.findById(Integer.parseInt(uid));
+        if(!optionalUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        User user = optionalUser.get();
+        // return item;
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
 }

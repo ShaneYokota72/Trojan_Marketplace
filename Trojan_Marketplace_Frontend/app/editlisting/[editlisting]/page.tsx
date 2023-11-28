@@ -1,9 +1,8 @@
 "use client"
-import Link from 'next/link'
-import MarketPlaceHeader from '../components/MarketPlaceHeader';
-import Footer from '../components/Footer';
-import { useState } from 'react';
+import MarketPlaceHeader from '@/app/components/MarketPlaceHeader';
 import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 
 async function getcookie() {
     const res = await fetch('http://localhost:8000/auth/getcookie', {
@@ -16,20 +15,38 @@ async function getcookie() {
    
     const data = await res.json();
     return data;
-  }
+}
 
-export default function CreateListing() {
+export default function page() {
     const router = useRouter();
+    const params = useParams();
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [image , setImage] = useState('');
     const [price, setPrice] = useState('');
 
+    useEffect(() => {
+        const api = async () => {
+            const response = await fetch(`http://localhost:8000/listing/getitem/${params.editlisting}`, {
+                method: 'GET',  
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+            })
+            const data = await response.json();
+            setName(data.name);
+            setDescription(data.description);
+            setImage(data.image);
+            setPrice(data.price);
+        }
+        api();
+    },[])
+
     async function handlesumbit() {
         console.log(name, description, image, price);
         const uid = await getcookie();
-        const res = await fetch('http://localhost:8000/listing/add', {
+        const res = await fetch(`http://localhost:8000/listing/edit/${params.editlisting}`, {
             method: 'POST',  
             headers: {
               'Content-Type': 'application/json'
@@ -42,12 +59,12 @@ export default function CreateListing() {
                 price: Number(price),
             })
         })
-        if(res.status === 201) {
-            console.log('successful create listing');
+        if(res.status === 200) {
+            console.log('successful listing edit');
             router.push('/marketplaceuser');
         } else {
-            console.log('unsuccessful create listing');
-            alert('Unsuccessful create listing. Please Try Again');
+            console.log('unsuccessful listing edit');
+            alert('Unsuccessful listing edit. Please Try Again');
         }
     }
 
