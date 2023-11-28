@@ -37,19 +37,9 @@ public class ListingController {
 
     // GET: /listing/search
     // search for listings of a particular keyword
-        // TODO: consider functionality to have a type of sorting (i.e. relevance, best search etc.)
     @GetMapping("/getall/{query}")
     List<Listing> searchListings(@PathVariable String query){
-        // List<Listing> relevant  = Listing_Repo.findAll();
-
         return Listing_Repo.findByNameContaining(query);
-
-        // Listing_Repo.findbb
-        
-
-        // TODO: implement a find all by a particular search query
-
-        // return relevant;
     }
     
     
@@ -116,7 +106,6 @@ public class ListingController {
 
     // POST: /listing/edit/{LISTING ID HERE}
     // remove a listing
-        // TODO: consider adding functionality to make sure the right user edits their OWN listing
     @PostMapping("/edit/{id}")
     // @NotFound(action = NotFoundAction.IGNORE)
     ResponseEntity<?> editListing(@PathVariable Integer id, @RequestBody Listing edits){
@@ -125,7 +114,6 @@ public class ListingController {
             Listing listing = Listing_Repo.findById(id).get();
 
             // update all our entries
-                // TODO: make sure entries aren't null (they shouldn't be?)
             listing.setName(edits.getName());
             listing.setPrice(edits.getPrice());
             listing.setDescription(edits.getDescription());
