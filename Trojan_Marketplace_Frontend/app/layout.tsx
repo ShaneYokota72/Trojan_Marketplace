@@ -12,10 +12,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="mytheme">
-      <body className="flex flex-col min-h-screen inter">
+      {/* <body className="flex flex-col min-h-screen inter">
         <main className="flex-grow">
           {children}
         </main>
+        <Footer />
+      </body> */}
+      <body className={inter.className + " flex flex-col min-h-screen justify-between"}>
+        <div>
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
