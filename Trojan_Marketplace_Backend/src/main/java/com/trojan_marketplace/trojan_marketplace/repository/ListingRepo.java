@@ -9,4 +9,5 @@ public interface ListingRepo extends JpaRepository<Listing,Integer>{
     // public List<Listing> search(String keyword);
 
     public List<Listing> findByNameContaining(String keyword);
+    public List<Listing> findByuserId(Integer userId);
 }

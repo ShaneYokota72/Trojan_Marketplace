@@ -1,10 +1,31 @@
 'use client'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, {useState, useEffect} from 'react'
 const MarketPlaceHeader = () => {
+  const router = useRouter();
 
   const [search, setSearch] = useState('')
 
+
+  const handlelogout = async () => {
+    const res = await fetch('http://localhost:8000/auth/logout', {
+      method: 'POST',  
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    if (res.status === 200) {
+      // successful sign up
+      console.log('successful logout');
+      router.push('/')
+    } else {
+      // unsuccessful sign up
+      console.log('unsuccessful logout');
+      alert('Unsuccessful logout. Please Try Again');
+    }
+  }
 
   
   return (
@@ -35,10 +56,11 @@ const MarketPlaceHeader = () => {
                 <Link href = "/cart/1" className='hover:text-red-900 float-none text-base'>Cart</Link>
             </div>
             <div>
-                <Link href = "/listing/1" className='hover:text-red-900 float-none text-base'>Listings</Link>
+                <Link href = "/listing" className='hover:text-red-900 float-none text-base'>Listings</Link>
             </div>
             <div>
-                <Link href = "/" className='hover:text-red-900 float-none text-base'>Logout</Link>
+                {/* <Link href = "/" className='hover:text-red-900 float-none text-base'>Logout</Link> */}
+                <button onClick={handlelogout} className='hover:text-red-900 float-none text-base'>Logout</button>
             </div>
       </div>
     </div>

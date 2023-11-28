@@ -42,6 +42,15 @@ public class UserController {
         User_Repo.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
+
+    @PostMapping("/logout")
+    ResponseEntity<?> logout(HttpServletResponse response){
+        Cookie cookie = new Cookie("user-id", "0");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok().build();
+    }
    
     @GetMapping("/getcookie")
     ResponseEntity<?> getcookie(HttpServletRequest request){

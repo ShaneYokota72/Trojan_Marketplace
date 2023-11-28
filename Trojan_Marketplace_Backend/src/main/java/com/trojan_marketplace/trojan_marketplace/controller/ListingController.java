@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import com.trojan_marketplace.trojan_marketplace.model.Listing;
 import com.trojan_marketplace.trojan_marketplace.repository.ListingRepo;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/listing")
 public class ListingController {
@@ -49,6 +50,17 @@ public class ListingController {
 
         // return relevant;
     }
+    
+    
+    // GET: /listing/get/{user-id}
+    // search for listings of a a certain user
+    @GetMapping("/get/{query}")
+    List<Listing> mylisting(@PathVariable String query){
+        // List<Listing> relevant  = Listing_Repo.findAll();
+        return Listing_Repo.findByuserId(Integer.parseInt(query));
+    }
+
+
 
     // POST: /listing/add
     // add a listing

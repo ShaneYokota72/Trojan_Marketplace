@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import MarketPlaceHeader from '../../components/MarketPlaceHeader';
-import Cart from '../../components/Cart';
+import MarketPlaceHeader from '../components/MarketPlaceHeader';
+import Cart from '../components/Cart';
 
 export default function CartPage() {
     return (
