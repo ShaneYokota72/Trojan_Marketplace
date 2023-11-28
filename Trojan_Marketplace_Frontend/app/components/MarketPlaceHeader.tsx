@@ -41,12 +41,10 @@ const MarketPlaceHeader = () => {
                             <input className="input input-bordered !outline-none join-item w-[25rem]" placeholder="Search" value ={search} onChange={e => setSearch(e.target.value)}/>
                         </div>
                     </div>
-
                     <div className="indicator">
                         <button className="btn join-item text-accent font-thin text-base">Search</button>
                     </div>
             </div>
-
             {/* <div>
                 <Link href = "/" className='hover:text-red-900 float-none text-base'>Search Item</Link>
             </div> */
@@ -57,14 +55,15 @@ const MarketPlaceHeader = () => {
             </div>
             <div>
                 <Link href = "/listing" className='hover:text-red-900 float-none text-base'>Listings</Link>
+                <Link href = "/listing/1" className='hover:text-red-900 float-none text-base'>Listings</Link>
             </div>
             <div>
                 {/* <Link href = "/" className='hover:text-red-900 float-none text-base'>Logout</Link> */}
                 <button onClick={handlelogout} className='hover:text-red-900 float-none text-base'>Logout</button>
+                <Link href = "/" className='hover:text-red-900 float-none text-base'>Logout</Link>
             </div>
       </div>
     </div>
   )
 }
-
 export default MarketPlaceHeader
