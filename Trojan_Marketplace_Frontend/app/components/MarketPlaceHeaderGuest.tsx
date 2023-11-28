@@ -1,10 +1,12 @@
 'use client'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, {useState, useEffect} from 'react'
 
 const MarketPlaceHeaderGuest = () => {
-
+  const router = useRouter();
   const [search, setSearch] = useState('')
+
   return (
       <div className='text-accent  font-serif bg-white h-40 border-2'>
         <div className = "ml-4 mt-8 text-2xl w-96 float-left">
@@ -20,7 +22,8 @@ const MarketPlaceHeaderGuest = () => {
                       </div>
   
                       <div className="indicator">
-                          <button className="btn join-item text-accent font-thin text-base">Search</button>
+                        <button onClick={() => { router.push(`/marketplaceguest/${search}`)}}
+                        className="btn join-item text-accent font-thin text-base">Search</button>
                       </div>
               </div>
   

@@ -1,8 +1,10 @@
 "use client"
 import React,{useEffect, useState} from 'react'
-import Item from '../components/item'
-import MarketPlaceHeaderGuest from '../components/MarketPlaceHeaderGuest'
+import Item from '../../components/item'
+import MarketPlaceHeaderGuest from '../../components/MarketPlaceHeaderGuest'
 import { useRouter } from 'next/navigation'
+
+import { useParams } from 'next/navigation'
 
 interface Item {
   id: number;
@@ -39,38 +41,30 @@ async function getitems() {
   return data;
 }
 
+async function getsearchitems(search: string) {
+  const res = await fetch(`http://localhost:8000/listing/getall/${search}`, {
+    method: 'GET',  
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+ 
+  const data = await res.json();
+  return data;
+}
+
 const page = () => {
   const router = useRouter();
   const [redirect, setredirect] = useState(false)
   const [data, setdata] = useState<Item[]>([])
   
-  // const data  = [
-  //   {
-  //     name: 'Shoes',
-  //     description: 'If a dog chews shoes whose shoes does he choose?',
-  //     image: 'https://st.depositphotos.com/2274151/4841/i/450/depositphotos_48410095-stock-photo-sample-blue-square-grungy-stamp.jpg',
-  //     alt: 'picture of shoes'
-  //   },
-  //   {
-  //     name: 'skateboard',
-  //     description: ' Sam swiftly skates on a sleek skateboard, skillfully spinning through the city streets.',
-  //     image: 'https://st.depositphotos.com/2274151/4841/i/450/depositphotos_48410095-stock-photo-sample-blue-square-grungy-stamp.jpg',
-  //     alt: 'picture of skateboard'
-  //   },
-  //   {
-  //     name: 'Cookie',
-  //     description: 'Craving crunchy cookies, Carla cheerfully chewed.',
-  //     image: 'https://st.depositphotos.com/2274151/4841/i/450/depositphotos_48410095-stock-photo-sample-blue-square-grungy-stamp.jpg',
-  //     alt: 'picture of Cookie'
-  //   },
-  //   {
-  //     name: 'Notebook',
-  //     description: 'Naomis nimble fingers neatly noted in her notebook.',
-  //     image: 'https://st.depositphotos.com/2274151/4841/i/450/depositphotos_48410095-stock-photo-sample-blue-square-grungy-stamp.jpg',
-  //     alt: 'picture of Notebook'
-  //   },
-  // ]
+  const params = useParams();
 
+  if(params.slug !== undefined) {
+    console.log(params.slug[0]);
+  }
+
+  // authentication effect
   useEffect(() => {
     const api = async () => {
       const response = await getcookie();
@@ -81,10 +75,14 @@ const page = () => {
     api();
   },[])
 
+  // searching
   useEffect(() => {
     const api = async () => {
-      const response = await getitems();
-      if (response !== null) {
+      if(params.slug !== undefined) {
+        const response = await getsearchitems(params.slug[0]);
+        setdata(response);
+      } else {
+        const response = await getitems();
         setdata(response);
       }
     }
@@ -94,6 +92,8 @@ const page = () => {
       // Cleanup if needed
     };
   },[])
+
+  
 
 
   if(redirect){
@@ -108,8 +108,11 @@ const page = () => {
         <div className='flex flex-wrap justify-start w-full items-center px-40 pt-20'>
           {
             data.map((item) => (
-              <Item key={item.name} name={item.name} description={item.description} image={item.image} />
+              <Item name={item.name} description={item.description} image={item.image} id={item.id} />
             ))
+          }
+          {
+            data.length === 0 ? <div className='text-2xl'>No items found</div> : null
           }
         </div>
     </div>
