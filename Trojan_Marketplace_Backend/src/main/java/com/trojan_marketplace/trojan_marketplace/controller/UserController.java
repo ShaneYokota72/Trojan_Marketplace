@@ -73,8 +73,6 @@ public class UserController {
     // /auth/login (POST) - log in (frontend:make sure the user sends all info)
     @PostMapping("/login")
     ResponseEntity<?> login(@RequestBody Map<String, String> body, HttpServletResponse response
-        // @RequestParam String username,
-        // @RequestParam String password
     ){
         String username = body.get("username");
         String password = body.get("password");
